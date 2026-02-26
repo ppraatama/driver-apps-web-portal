@@ -7,11 +7,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 // import dotenv from 'dotenv';
 // import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
+// dotev.config({ path: path.resolve(__dirname, '.env') });
 export default defineConfig({
   globalSetup: './auth/login.setup.js',
   testDir: './tests',
@@ -26,10 +22,10 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
 
-    ['list'],
-    ['html'],
-    ['allure-playwright']
-
+    ['line'],
+    ['allure-playwright', {
+      outputFolder: process.env.ALLURE_RESULTS_DIR || 'allure-results'
+    }]
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

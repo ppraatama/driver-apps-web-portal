@@ -8,8 +8,8 @@
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "allure:generate": "allure generate allure-results -o allure-report --clean",
-    "allure:open": "allure open allure-report",
-    "test:allure": "playwright test && allure generate allure-results -o allure-report --clean && allure open allure-report"
+    "allure:open": "allure open allure-report/latest",
+    "test:allure": "node generateAllure.js"
   },
   "keywords": [],
   "author": "",
