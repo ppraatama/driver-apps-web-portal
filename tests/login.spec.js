@@ -13,12 +13,10 @@ test.describe('Login Driver Apps Portal', () => {
     await test.step('Navigate to login page', async () => {
 
       await loginPage.navigate(config.baseUrl);
-
     });
 
     await test.step('Login with valid credentials', async () => {
 
-      // wait for login API response
       const responsePromise = page.waitForResponse(response =>
         response.url().includes('/token/auth') &&
         response.request().method() === 'POST'
@@ -29,18 +27,15 @@ test.describe('Login Driver Apps Portal', () => {
         users[0].password
       );
 
-      // capture response
       apiResponse = await responsePromise;
 
       apiResponseBody = await apiResponse.text();
 
-      // attach to Allure
       await allure.attachment(
         `LOGIN API Response (${apiResponse.status()})`,
         apiResponseBody,
         'application/json'
       );
-
     });
 
     await test.step('Validate Login API Response', async () => {
@@ -48,23 +43,16 @@ test.describe('Login Driver Apps Portal', () => {
       const json = JSON.parse(apiResponseBody);
 
       expect(apiResponse.status()).toBe(200);
-
       expect(json).toHaveProperty('access_token');
-
       expect(json).toHaveProperty('id_token');
-
       expect(json).toHaveProperty('expires_in');
-
       expect(json.access_token).toBeTruthy();
-
     });
 
     await test.step('Verify successful login', async () => {
 
       await expect(page).toHaveURL(/bluebird.id/);
-
     });
-
   });
 
   test('Login invalid username', async ({ loginPage }) => {
@@ -72,7 +60,6 @@ test.describe('Login Driver Apps Portal', () => {
     await test.step('Navigate to login page', async () => {
 
       await loginPage.navigate(config.baseUrl);
-
     });
 
     await test.step('Login with invalid username', async () => {
@@ -81,18 +68,13 @@ test.describe('Login Driver Apps Portal', () => {
         invalidUsername.username,
         users[0].password
       );
-
     });
 
     await test.step('Verify error message', async () => {
 
       await expect(loginPage.errorMessage).toBeVisible();
-
-      await expect(loginPage.errorMessage)
-        .toContainText('Invalid Username and Password');
-
+      await expect(loginPage.errorMessage).toContainText('Invalid Username and Password');
     });
-
   });
 
   test('Login invalid password', async ({ loginPage }) => {
@@ -100,7 +82,6 @@ test.describe('Login Driver Apps Portal', () => {
     await test.step('Navigate to login page', async () => {
 
       await loginPage.navigate(config.baseUrl);
-
     });
 
     await test.step('Login with invalid password', async () => {
@@ -109,18 +90,12 @@ test.describe('Login Driver Apps Portal', () => {
         users[0].username,
         invalidPassword.password
       );
-
     });
 
     await test.step('Verify error message', async () => {
 
       await expect(loginPage.errorMessage).toBeVisible();
-
-      await expect(loginPage.errorMessage)
-        .toContainText('Invalid Username and Password');
-
+      await expect(loginPage.errorMessage).toContainText('Invalid Username and Password');
     });
-
   });
-
 });

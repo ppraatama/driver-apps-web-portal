@@ -6,9 +6,6 @@ export const test = base.extend({
 
   page: async ({ page }, use) => {
 
-    // ============================
-    // CAPTURE LOGIN API REQUEST
-    // ============================
     page.on('request', async (request) => {
 
       if (request.url().includes('/token/auth')) {
@@ -35,9 +32,6 @@ export const test = base.extend({
 
     });
 
-    // ============================
-    // CAPTURE LOGIN API RESPONSE
-    // ============================
     page.on('response', async (response) => {
 
       if (response.url().includes('/token/auth')) {
